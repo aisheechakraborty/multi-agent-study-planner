@@ -15,3 +15,13 @@ The system is built using an agent-based approach, where multiple AI agents coll
 To create a simple yet powerful AI-driven platform that improves consistency, reduces stress, and helps students study smarter—not harder.
 
 *“This project demonstrates the practical use of agent-based AI systems in solving real-world productivity and education challenges.”*
+
+🧩 System Architecture
+
+This project follows a multi-agent architecture:
+
+Master Controller → manages flow
+Planner Agent → generates timetable
+Tracker Agent → updates schedule
+Doubt Solver → handles queries
+Motivation Agent → improves engagement
