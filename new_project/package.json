@@ -1,0 +1,13 @@
+{
+  "name": "ai-study-command-center",
+  "version": "1.0.0",
+  "description": "AI-powered multi-agent study planner, tracker, motivator, and doubt solver",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["study", "planner", "ai", "education"],
+  "author": "Avijit Dey",
+  "license": "MIT"
+}

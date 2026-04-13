@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Study Command Center — Your Personal Exam Coach</title>
+  <meta name="description" content="AI-powered multi-agent study planner, tracker, motivator, and doubt solver. Prepare for exams smarter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-brand">
+      <span class="nav-icon">🧠</span>
+      <span class="nav-title">StudyAI</span>
+    </div>
+    <div class="nav-links">
+      <a href="#" id="nav-home" class="nav-link active" onclick="showSection('hero')">Home</a>
+      <a href="#" id="nav-setup" class="nav-link" onclick="showSection('setup')">Setup</a>
+      <a href="#" id="nav-dashboard" class="nav-link" onclick="showSection('dashboard')">Dashboard</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO SECTION ============ -->
+  <section id="hero" class="section active">
+    <div class="hero-content">
+      <div class="hero-badge">🤖 Multi-Agent AI System</div>
+      <h1 class="hero-title">
+        AI Study<br>
+        <span class="gradient-text">Command Center</span>
+      </h1>
+      <p class="hero-subtitle">
+        Four AI agents working together to plan your studies, track your progress,
+        solve your doubts, and keep you motivated — all the way to exam day.
+      </p>
+      <button id="hero-cta" class="btn btn-primary btn-lg" onclick="showSection('setup')">
+        <span>Get Started</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+
+      <!-- Agent Cards Preview -->
+      <div class="agent-preview-grid">
+        <div class="agent-card agent-planner">
+          <div class="agent-card-icon">📅</div>
+          <h3>Planner Agent</h3>
+          <p>Creates smart day-by-day study timetables tailored to your exam</p>
+        </div>
+        <div class="agent-card agent-tracker">
+          <div class="agent-card-icon">🔄</div>
+          <h3>Tracker Agent</h3>
+          <p>Adjusts your plan dynamically when tasks are missed or completed</p>
+        </div>
+        <div class="agent-card agent-motivation">
+          <div class="agent-card-icon">💬</div>
+          <h3>Motivation Agent</h3>
+          <p>Keeps you encouraged with personalized messages and streaks</p>
+        </div>
+        <div class="agent-card agent-doubt">
+          <div class="agent-card-icon">❓</div>
+          <h3>Doubt Solver</h3>
+          <p>Explains concepts clearly with simple and exam-focused answers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SETUP SECTION ============ -->
+  <section id="setup" class="section">
+    <div class="setup-container">
+      <div class="setup-header">
+        <h2>Configure Your Study Plan</h2>
+        <p>Tell us about your exam and preferences</p>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step-dot active" data-step="1"><span>1</span><small>Exam Info</small></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="2"><span>2</span><small>Subjects</small></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="3"><span>3</span><small>Launch</small></div>
+      </div>
+
+      <!-- Step 1: Exam Details -->
+      <div class="setup-step active" id="setup-step-1">
+        <div class="form-group">
+          <label for="exam-name">Exam Name</label>
+          <input type="text" id="exam-name" placeholder="e.g., Final Semester, JEE Mains, SAT" class="form-input">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="exam-date">Exam Date</label>
+            <input type="date" id="exam-date" class="form-input">
+          </div>
+          <div class="form-group">
+            <label for="daily-hours">Daily Study Hours</label>
+            <div class="slider-container">
+              <input type="range" id="daily-hours" min="1" max="12" value="4" class="form-slider">
+              <span id="hours-display" class="slider-value">4 hrs</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-primary" onclick="nextStep(2)">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Subjects -->
+      <div class="setup-step" id="setup-step-2">
+        <div class="form-group">
+          <label>Add Your Subjects</label>
+          <div class="subject-input-row">
+            <input type="text" id="subject-input" placeholder="e.g., Mathematics" class="form-input">
+            <label class="weak-toggle">
+              <input type="checkbox" id="is-weak">
+              <span class="weak-label">Weak?</span>
+            </label>
+            <button class="btn btn-sm btn-accent" onclick="addSubject()">+ Add</button>
+          </div>
+        </div>
+        <div id="subject-list" class="subject-chips"></div>
+        <p class="hint-text" id="subject-hint">Add at least 2 subjects to continue</p>
+        <div class="step-actions">
+          <button class="btn btn-ghost" onclick="nextStep(1)">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep(3)" id="step2-next" disabled>Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Launch -->
+      <div class="setup-step" id="setup-step-3">
+        <div class="form-group">
+          <label for="initial-doubt">Any Doubts to Start With? <small>(optional)</small></label>
+          <textarea id="initial-doubt" rows="3" placeholder="e.g., Explain the quadratic formula..." class="form-input form-textarea"></textarea>
+        </div>
+        <div class="launch-summary" id="launch-summary"></div>
+        <div class="step-actions">
+          <button class="btn btn-ghost" onclick="nextStep(2)">← Back</button>
+          <button class="btn btn-primary btn-lg btn-launch" onclick="generatePlan()">
+            <span class="btn-pulse"></span>
+            🚀 Launch Study Plan
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD SECTION ============ -->
+  <section id="dashboard" class="section">
+    <!-- Agent Status Bar -->
+    <div class="agent-status-bar">
+      <div class="agent-status" id="status-planner">
+        <span class="status-dot"></span>
+        <span class="status-icon">📅</span>
+        <span class="status-name">Planner</span>
+        <span class="status-state">Idle</span>
+      </div>
+      <div class="agent-status" id="status-tracker">
+        <span class="status-dot"></span>
+        <span class="status-icon">🔄</span>
+        <span class="status-name">Tracker</span>
+        <span class="status-state">Idle</span>
+      </div>
+      <div class="agent-status" id="status-motivation">
+        <span class="status-dot"></span>
+        <span class="status-icon">💬</span>
+        <span class="status-name">Motivator</span>
+        <span class="status-state">Idle</span>
+      </div>
+      <div class="agent-status" id="status-doubt">
+        <span class="status-dot"></span>
+        <span class="status-icon">❓</span>
+        <span class="status-name">Doubt Solver</span>
+        <span class="status-state">Idle</span>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Left: Main Content -->
+      <div class="dashboard-main">
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+          <button class="tab-btn active" data-tab="plan" onclick="switchTab('plan')">📅 Study Plan</button>
+          <button class="tab-btn" data-tab="tracker" onclick="switchTab('tracker')">🔄 Tracker</button>
+          <button class="tab-btn" data-tab="doubts" onclick="switchTab('doubts')">❓ Doubt Solver</button>
+        </div>
+
+        <!-- Plan Tab -->
+        <div class="tab-content active" id="tab-plan">
+          <div class="plan-header">
+            <div>
+              <h2 id="plan-title">Your Study Plan</h2>
+              <p id="plan-subtitle" class="text-muted"></p>
+            </div>
+            <div class="plan-stats">
+              <div class="stat-box">
+                <span class="stat-value" id="stat-days">0</span>
+                <span class="stat-label">Days Left</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-value" id="stat-subjects">0</span>
+                <span class="stat-label">Subjects</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-value" id="stat-hours">0</span>
+                <span class="stat-label">Hrs/Day</span>
+              </div>
+            </div>
+          </div>
+          <div id="plan-timeline" class="plan-timeline"></div>
+        </div>
+
+        <!-- Tracker Tab -->
+        <div class="tab-content" id="tab-tracker">
+          <div class="tracker-header">
+            <h2>📊 Progress Tracker</h2>
+            <div class="progress-overview">
+              <div class="progress-ring-container">
+                <svg class="progress-ring" width="120" height="120">
+                  <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
+                  <circle class="progress-ring-fill" cx="60" cy="60" r="52" id="progress-circle"/>
+                </svg>
+                <span class="progress-percent" id="progress-percent">0%</span>
+              </div>
+              <div class="progress-stats">
+                <div class="p-stat completed"><span id="completed-count">0</span> Completed</div>
+                <div class="p-stat missed"><span id="missed-count">0</span> Missed</div>
+                <div class="p-stat pending"><span id="pending-count">0</span> Pending</div>
+              </div>
+            </div>
+          </div>
+          <h3 class="tracker-section-title">Today's Tasks</h3>
+          <div id="today-tasks" class="task-list"></div>
+          <div class="tracker-actions">
+            <button class="btn btn-primary" onclick="reschedule()">🔄 Reschedule Missed Tasks</button>
+            <button class="btn btn-ghost" onclick="resetProgress()">Reset Day</button>
+          </div>
+          <h3 class="tracker-section-title">Upcoming</h3>
+          <div id="upcoming-tasks" class="task-list upcoming"></div>
+        </div>
+
+        <!-- Doubts Tab -->
+        <div class="tab-content" id="tab-doubts">
+          <div class="doubt-solver-container">
+            <h2>🧠 Doubt Solver Agent</h2>
+            <p class="text-muted">Ask a question and select the mode for your answer</p>
+            <div class="doubt-form">
+              <div class="form-group">
+                <label for="doubt-subject">Subject</label>
+                <select id="doubt-subject" class="form-input form-select"></select>
+              </div>
+              <div class="form-group">
+                <label for="doubt-question">Your Question</label>
+                <textarea id="doubt-question" rows="3" placeholder="Type your doubt or question here..." class="form-input form-textarea"></textarea>
+              </div>
+              <div class="doubt-modes">
+                <label class="mode-option active">
+                  <input type="radio" name="doubt-mode" value="simple" checked>
+                  <span class="mode-card">
+                    <span class="mode-icon">💡</span>
+                    <span class="mode-name">Simple</span>
+                    <span class="mode-desc">Easy explanation</span>
+                  </span>
+                </label>
+                <label class="mode-option">
+                  <input type="radio" name="doubt-mode" value="exam">
+                  <span class="mode-card">
+                    <span class="mode-icon">🎯</span>
+                    <span class="mode-name">Exam-Focused</span>
+                    <span class="mode-desc">Key points & tips</span>
+                  </span>
+                </label>
+              </div>
+              <button class="btn btn-primary" onclick="solveDoubt()">🔍 Get Answer</button>
+            </div>
+            <div id="doubt-response" class="doubt-response hidden"></div>
+            <div id="doubt-history" class="doubt-history"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Motivation Sidebar -->
+      <div class="dashboard-sidebar">
+        <!-- Motivation Panel -->
+        <div class="motivation-panel">
+          <div class="motivation-header">
+            <span class="motivation-icon">💬</span>
+            <h3>Motivation Agent</h3>
+          </div>
+          <div class="motivation-message" id="motivation-message">
+            <p>Click "Generate Plan" to get started!</p>
+          </div>
+          <button class="btn btn-sm btn-ghost" onclick="refreshMotivation()">🔄 New Message</button>
+        </div>
+
+        <!-- Streak Panel -->
+        <div class="streak-panel">
+          <div class="streak-header">
+            <span class="streak-fire">🔥</span>
+            <h3>Study Streak</h3>
+          </div>
+          <div class="streak-count" id="streak-count">0</div>
+          <p class="streak-label">days in a row</p>
+          <div class="streak-calendar" id="streak-calendar"></div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats-panel">
+          <h3>📈 Quick Stats</h3>
+          <div class="qs-item">
+            <span class="qs-label">Total Study Hours</span>
+            <span class="qs-value" id="total-study-hours">0h</span>
+          </div>
+          <div class="qs-item">
+            <span class="qs-label">Completion Rate</span>
+            <span class="qs-value" id="completion-rate">0%</span>
+          </div>
+          <div class="qs-item">
+            <span class="qs-label">Strongest Subject</span>
+            <span class="qs-value" id="strongest-subject">—</span>
+          </div>
+          <div class="qs-item">
+            <span class="qs-label">Needs Focus</span>
+            <span class="qs-value" id="weakest-subject">—</span>
+          </div>
+        </div>
+
+        <!-- Reset -->
+        <button class="btn btn-ghost btn-sm btn-danger" onclick="resetAll()" id="btn-reset-all">🗑️ Reset Everything</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p class="loading-text" id="loading-text">Initializing agents...</p>
+      <div class="loading-agents">
+        <span class="la" id="la-planner">📅 Planner</span>
+        <span class="la" id="la-tracker">🔄 Tracker</span>
+        <span class="la" id="la-motivation">💬 Motivator</span>
+        <span class="la" id="la-doubt">❓ Doubt Solver</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="js/agents.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
